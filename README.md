@@ -1,12 +1,11 @@
 corso_processing_pong
 =====================
 
-Jumpstart Processing
-Starter 3D, Pescara 29/30-11-2014
-per Officine Arduino
+Made for educational purpose. 
+Jumpstar Processing Starter 3d 2014, 
+Workshop a cura di Officine Arduino
 
-Docenti
-Eugenio Vannoni
-Valentina Urbinati
+Docenti Valentina Urbinati, Eugenio Vannoni
 
+This examples are in the public domain.
 

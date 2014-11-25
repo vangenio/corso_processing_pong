@@ -1,8 +1,25 @@
-//impostazioni seriale per comunicare con arduino
-import processing.serial.*;
-int lf = 10;    // Linefeed in ASCII
-String myString = null;
-Serial myPort;  // The serial port
+/*
+
+Pong game. Two player, Simple AI for "Player vs Computer" or "computer vs computer" mode.
+Player can use a DIY arduino controlled pad, an explora, or the keyboard ("q" and "a" for player 1, "9" and "6" for the player 2)
+Press "p" to stroke again from the middle
+
+TODO
+ - more intelligent AI
+
+2014/11/25
+Eugenio Vannoni
+
+Made for educational purpose. 
+Jumpstar processing Starter 3d 2014, 
+Workshop a cura di Officine Arduino
+
+
+This example is in the public domain.
+
+*/
+
+
 
 //variabili campo
   int w; //larghezza schermo
@@ -39,7 +56,12 @@ Serial myPort;  // The serial port
   boolean segnato;
   boolean autoplay1=true;
   boolean autoplay2=true;
-
+//impostazioni seriale per comunicare con arduino
+  import processing.serial.*;
+  int lf = 10;    // Linefeed in ASCII
+  String myString = null;
+  Serial myPort;  // The serial port
+  boolean periferica = true;
 
 PFont myFont;
 
@@ -49,8 +71,9 @@ void setup(){
   textAlign(CENTER, CENTER);
   
     size(displayWidth, displayHeight);
-  
-//impostazioni seriale per comunicare con arduino
+ //impostazioni seriale per comunicare con arduino
+if(periferica){
+ 
  // List all the available serial ports
  // println(Serial.list());
   // Open the port you are using at the rate you want:
@@ -60,7 +83,7 @@ void setup(){
   // in the middle of a string from the sender.
   myString = myPort.readStringUntil(lf);
   myString = null;
-  
+ }
 //impostazioni campo
   dP=10; //diametro della palla
   w=displayWidth;  //larghezza del campo misurato in numeri di diametri di palla
@@ -98,30 +121,30 @@ void setup(){
 
 void draw(){
 //lettura seriale per comunicare con arduino
+if(periferica){
 while (myPort.available() > 0) {
-   byte[] inBuffer = new byte[10];
+   byte[] inBuffer = new byte[8];
    
     myPort.readBytesUntil(lf, inBuffer);
     if (inBuffer != null) {
       
       String str = new String(inBuffer);
-      
-    if(!autoplay1)  yRac1=round(map(int(str.substring(0,4)),0,1000,minY,maxY));
-    if(!autoplay2)  yRac2=round(map(int(str.substring(4,8)),0,1000,minY,maxY));
+      if(int(str.substring(0,2))== 1)if(!autoplay1)  yRac1=round(map(int(str.substring(2,6)),0,1000,minY,maxY));
+      if(int(str.substring(0,2))== 2)if(!autoplay2)  yRac2=round(map(int(str.substring(2,6)),0,1000,minY,maxY));
       
     }
   }
+}
   
-    if(autoplay1){
-   if(yP>yRac2+hRac/2)yRac2+=5;
-  if(yP<yRac2+hRac/2)yRac2-=5; 
+    if(autoplay2){
+	if(yP>yRac2+hRac/2)yRac2+=5;
+	if(yP<yRac2+hRac/2)yRac2-=5; 
     }
     
     if(autoplay1){
-   if(yP>yRac1+hRac/2)yRac1+=5;
-  if(yP<yRac1+hRac/2)yRac1-=5; 
-    
-  }
+	if(yP>yRac1+hRac/2)yRac1+=5;
+	if(yP<yRac1+hRac/2)yRac1-=5; 
+    }
 //controllo che le racchette non superino i bordi
   if(yRac1 < minY) yRac1=minY;
   if(yRac2 < minY) yRac2=minY;

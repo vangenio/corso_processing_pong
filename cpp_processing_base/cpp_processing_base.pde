@@ -1,3 +1,21 @@
+/*
+
+Step by step pong game code.
+
+
+2014/11/25
+Eugenio Vannoni
+
+Made for educational purpose. 
+Jumpstar processing Starter 3d 2014, 
+Workshop a cura di Officine Arduino
+
+
+This example is in the public domain.
+
+*/
+
+
 PFont myFont;
 
 int wCampo=400;  //larghezza campo
