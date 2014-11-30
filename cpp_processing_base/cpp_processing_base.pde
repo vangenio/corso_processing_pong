@@ -27,6 +27,7 @@ int dPallina=10; //diametro pallina
 float dirXPallina=random(-2,2);//round(random(0,1)*2-1)*random(0.8,1.2); //direizone x pallina
 float dirYPallina=random(-2,2);//round(random(0,1)*2-1)*random(0.8,1.2); //direzione y pallina
 
+
 int hRac=40;
 int wRac=10;
 int xRac1=0;
@@ -43,11 +44,17 @@ void setup(){
     myFont = createFont("UbuntuMono-Regular-48", 48);
   textFont(myFont);
   textAlign(CENTER, CENTER);
-  
+while(dirXPallina<0.5 || dirYPallina<0.5){
+  dirXPallina=random(-2,2);//round(random(0,1)*2-1)*random(0.8,1.2); //direizone x pallina
+  dirYPallina=random(-2,2);//round(random(0,1)*2-1)*random(0.8,1.2); //direzione y pallina
+
+
+}  
   
   size(wCampo,hCampo); 
+  
+noCursor();
 }
-
 void draw(){
   background(200,200,200);  // stende un velo di colore su tutto lo schermo
 
@@ -55,11 +62,11 @@ text(pGioc1+" "+pGioc2,wCampo/2,20);
 
 //se la pallina tocca i bordi laterali dove non ci sono le racchette si segna il punto all'avversario
 
-if(xPallina <dPallina/2 && yPallina < yRac1 ) pGioc1=pGioc1+1;
-if(xPallina <dPallina/2 && yPallina > yRac1+hRac ) pGioc1=pGioc1+1;
+if(xPallina <dPallina/2 && yPallina < yRac1 ) pGioc2=pGioc2+1;
+if(xPallina <dPallina/2 && yPallina > yRac1+hRac ) pGioc2=pGioc2+1;
 
-if(xPallina >wCampo-dPallina/2 && yPallina < yRac2 ) pGioc2=pGioc2+1;
-if(xPallina >wCampo-dPallina/2 && yPallina > yRac2+hRac ) pGioc2=pGioc2+1;  
+if(xPallina >wCampo-dPallina/2 && yPallina < yRac2 ) pGioc1=pGioc1+1;
+if(xPallina >wCampo-dPallina/2 && yPallina > yRac2+hRac ) pGioc1=pGioc1+1;  
   
   
 //pallina che si muve
@@ -76,8 +83,12 @@ if(xPallina >wCampo-dPallina/2 && yPallina > yRac2+hRac ) pGioc2=pGioc2+1;
   if(yPallina < 0 + dPallina / 2) dirYPallina=-dirYPallina;// rimbalzo sopra
 
 //due racchette che si muovono comandate dai giocatori
-yRac1=yRac1+dRac1;
-yRac2=yRac2+dRac2;
+//yRac1=yRac1+dRac1;
+//yRac2=yRac2+dRac2;
+
+yRac1=mouseY;
+if(yRac2+wRac/2<yPallina) yRac2+=1;
+if(yRac2+wRac/2>yPallina)yRac2-=1;
 
 if(yRac1+hRac>hCampo)yRac1=hCampo-hRac;
 if(yRac2+hRac>hCampo)yRac2=hCampo-hRac;

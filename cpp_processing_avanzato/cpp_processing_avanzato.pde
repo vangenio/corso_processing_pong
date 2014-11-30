@@ -61,7 +61,7 @@ This example is in the public domain.
   int lf = 10;    // Linefeed in ASCII
   String myString = null;
   Serial myPort;  // The serial port
-  boolean periferica = true;
+  boolean periferica = false;
 
 PFont myFont;
 
