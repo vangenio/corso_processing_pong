@@ -121,6 +121,9 @@ void draw(){
     }  
   }
    
+   for(int i=0; i < puntiG1;i++) rect(bordoCampo*2*i,height-bordoCampo,bordoCampo,bordoCampo);
+   for(int i=0; i < puntiG2;i++) rect(width-bordoCampo*2*i-bordoCampo,height-bordoCampo,bordoCampo,bordoCampo);
+ 
 }
 
 boolean sketchFullScreen() {
