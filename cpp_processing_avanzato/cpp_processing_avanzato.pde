@@ -19,6 +19,8 @@ This example is in the public domain.
 
 */
 
+import de.voidplus.leapmotion.*;
+LeapMotion leap;
 
 
 //variabili campo
@@ -54,8 +56,8 @@ This example is in the public domain.
   int puntiGiocatore1;
   int puntiGiocatore2;
   boolean segnato;
-  boolean autoplay1=true;
-  boolean autoplay2=true;
+  boolean autoplay1=false;
+  boolean autoplay2=false;
 //impostazioni seriale per comunicare con arduino
   import processing.serial.*;
   int lf = 10;    // Linefeed in ASCII
@@ -71,6 +73,14 @@ void setup(){
   textAlign(CENTER, CENTER);
   
     size(displayWidth, displayHeight);
+    
+    leap = new LeapMotion(this);
+ 
+  
+
+    
+    
+    
  //impostazioni seriale per comunicare con arduino
 if(periferica){
  
@@ -135,6 +145,23 @@ while (myPort.available() > 0) {
     }
   }
 }
+ for(Hand hand : leap.getHands()){
+
+
+    // ----- BASICS -----
+        
+    int     hand_id          = hand.getId();
+    PVector hand_position    = hand.getPosition();
+    PVector hand_stabilized  = hand.getStabilizedPosition();
+   
+   if(hand_stabilized.x>800)yRac2=int(hand_stabilized.y);
+   if(hand_stabilized.x<650)yRac1=int(hand_stabilized.y);
+   
+  
+  }
+
+
+
   
     if(autoplay2){
 	if(yP>yRac2+hRac/2)yRac2+=5;
@@ -166,7 +193,12 @@ while (myPort.available() > 0) {
   noStroke(); // dichiaro di non disegnare i contorni delle figure
   fill(255); //setto il colore bianco del riempimento
 
+   int fps = leap.getFrameRate();
 
+
+  // ========= HANDS =========
+    
+ 
   
 //controllo rimbalzi e punteggio
   if(xP+dirxP*dP>maxX){ // se la pallina tocca il lato destro giocatore 2
